@@ -1,0 +1,50 @@
+<html>
+
+    <head>
+        <link rel="stylesheet" href="/css/styles.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <title><%= title %></title>
+    </head>
+
+    <body>
+        <div class="container">
+            <center>
+                <h1>Get the listings, number_of_reviews and the corresponding host_name (name, host_name, number_of_reviews) that have received at least a certain number of reviews.</h1>
+                <hr>
+
+                <form method="post" action="/query3">
+                    <div class="form-group">
+                        <input required name="number_of_reviews" type="number" class="form-control" placeholder="Add number_of_reviews">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                <hr>
+
+                <% if(typeof results == 'undefined') { %>
+                    <h2 class="init">Configure the filters above and submit!</h2>
+                <% } else if (typeof results != 'undefined' && results.length != 0) { %>
+                    <h2>Listings with number_of_reviews <= <%= number_of_reviews %></h2>
+                    <table class="table">
+                        <tr>
+                            <th><h3>name</h3></th>
+                            <th><h3>host_name</h3></th>
+                            <th><h3>number_of_reviews</h3></th>
+                        </tr>
+                        <% for(var i = 0; i < results.length; i++) { %>
+                            <tr>
+                                <td class="row"><%= results[i].name %></td> 
+                                <td><%= results[i].host_name %></td>
+                                <td><%= results[i].number_of_reviews %></td>
+                            </tr>
+                        <% } %>
+                    </table>
+                <% } else { %>
+                    <h2>Listings with number_of_reviews <= <%= number_of_reviews %></h2>
+                    <h3 class="err">No results found!</h3>
+                <% } %>
+            </center>
+        </div>
+    </body>
+
+</html>

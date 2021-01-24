@@ -1,0 +1,33 @@
+{
+  "name": "stadvdb_s12.2_t120-21",
+  "version": "1.0.0",
+  "description": "This is a web application in partial fulfillment of the course STADVDB.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabminamedez/STADVDB_S12.2_T120-21.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabminamedez/STADVDB_S12.2_T120-21/issues"
+  },
+  "homepage": "https://github.com/gabminamedez/STADVDB_S12.2_T120-21#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "path": "^0.12.7"
+  }
+}

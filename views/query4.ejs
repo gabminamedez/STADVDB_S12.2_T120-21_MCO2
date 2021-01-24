@@ -1,0 +1,53 @@
+<html>
+
+    <head>
+        <link rel="stylesheet" href="/css/styles.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <title><%= title %></title>
+    </head>
+
+    <body>
+        <div class="container">
+            <center>
+                <h1>Get the listings, price and the corresponding host_name (name, host_name, price) that are between a specified price range.</h1>
+                <hr>
+
+                <form method="post" action="/query4">
+                    <div class="form-group">
+                        <input required name="lower_price" type="number" class="form-control" placeholder="Lower price">
+                    </div>
+                    <div class="form-group">
+                        <input required name="higher_price" type="number" class="form-control" placeholder="Higher price">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                <hr>
+
+                <% if(typeof results == 'undefined') { %>
+                    <h2 class="init">Configure the filters above and submit!</h2>
+                <% } else if (typeof results != 'undefined' && results.length != 0) { %>
+                    <h2>Listings with price between <%= lower_price %> and <%= higher_price %></h2>
+                    <table class="table">
+                        <tr>
+                            <th><h3>name</h3></th>
+                            <th><h3>host_name</h3></th>
+                            <th><h3>price</h3></th>
+                        </tr>
+                        <% for(var i = 0; i < results.length; i++) { %>
+                            <tr>
+                                <td class="row"><%= results[i].name %></td> 
+                                <td><%= results[i].host_name %></td>
+                                <td><%= results[i].price %></td>
+                            </tr>
+                        <% } %>
+                    </table>
+                <% } else { %>
+                    <h2>Listings with price between <%= lower_price %> and <%= higher_price %></h2>
+                    <h3 class="err">No results found!</h3>
+                <% } %>
+            </center>
+        </div>
+    </body>
+
+</html>
