@@ -7,6 +7,13 @@ p {
     text-align: justify;
 }
 
+#dbDesign {
+    width: 100%;
+    object-fit: cover;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .init {
     color: green;
 }

@@ -12,42 +12,40 @@
           <h1>About</h1>
           <p>Established in August of 2008, <strong>Airbnb</strong> is an American online platform that has been largely used worldwide for vacation purposes.</p>
           <p>The online marketplace offers a service catered for vacationers seeking for hotel alternatives. Airbnb opens interactions between homeowners looking to open their doors for customers to rent out their place for a certain amount of time. It's a type of business model that benefits all the stakeholders: customers get a wider array of choices for their accomodations, homeowners get to earn by offering bed and breakfast services, and the company profits off of commissions from the homeowners as well as other commercial profits.</p>
+
+          <hr>
+          <p><i>This web application was developed by Anjelo Antioquia, Gabriel Minamedez, Joshua Ranjo, and Julian Sunpayco of S12 in partial fulfillment of the course STADVDB.</i></p>
           <hr>
 
           <h2>The Data</h2>
           <p>This web application will return data from the <a target="_blank" href="https://www.kaggle.com/dgomonov/new-york-city-airbnb-open-data">New York City Airbnb Open Dataset</a>.</p>
           <p>The data centers around 40,000+ Airbnb listings and metrics in the New York City area in 2019. Each row in the data corresponds to a listing, with columns indicating details such as name, host name, and the like to contextualize each listing.</p>
-          <p>The data was then imported in a MySQL database for this web application to communicate to. This big dataset was split into 4 tables – <strong>listings, hosts, locations, and neighbourhoods</strong> – and, for the sake of brevity, filtered to only the first 1,000 rows.</p>
-          <p>Below are query prompts for the data. For each query prompt, you may play around with certain values to get a mix and match of data to be returned. Have fun!</p>
+          <p>Using ETL, the data was then loaded in a MySQL data warehouse for this web application to communicate to. This big dataset was split into 6 tables; <b>one fact table</b>, which is the <b>listings table</b>, and <b>five dimension tables</b>: <b>locations, neighbourhoods, neighbourhood groups, hosts and room_types</b>. Below is a visualization of the final database design:</p>
+          <img id="dbDesign" src="/images/db_design.png">
+          <p>Below are query prompts for the data according to the four variants of OLAP queries. Have fun!</p>
           <hr>
 
-          <p><i>This web application was developed by Anjelo Antioquia, Gabriel Minamedez, Joshua Ranjo, and Julian Sunpayco of S12 in partial fulfillment of the course STADVDB.</i></p>
-          <hr>
+          <h2>OLAP Queries</h2>
+          <p>There are four OLAP queries in total: <b>roll-up, drill-down, slice, and dice</b>. Each OLAP query has a corresponding query prompt specific to the purposes of the dataset. Feel free to click on each query prompt to determine the results with the use of their corresponding OLAP query.</p>
 
-          <h2>Query Prompts</h2>
-          <p>Query prompts are divided into four (4) categories according to the project specifications. Each query prompt leads to another page where you can play around with values to return.</p>
-
-          <h4>2 queries. 1 table per query. Single-table query must be written for either of the two largest tables (degree > 10) only.</h4>
+          <h4>Roll-Up</h4>
           <ul>
-            <li><p><a target="_blank" href="/query1">Get all listings (name, room_type, price) with a certain room type below or equal to a specified price.</a></p></li>
-            <li><p><a target="_blank" href="/query2">Get all listings (name, room_type, price) with a latest review in a certain month with minimum_nights at least a certain number.</a></p></li>
+            <li><p><a target="_blank" href="/query1">This is a query prompt for roll-up.</a></p></li>
           </ul>
 
-          <h4>2 queries. 2 tables per query. Query must support conditions to test the effect of the dataset (different input values) on the performance.</h4>
+          <h4>Drill-Down</h4>
           <ul>
-            <li><p><a target="_blank" href="/query3">Get the listings, number_of_reviews and the corresponding host_name (name, host_name, number_of_reviews) that have received at least a certain number of reviews.</a></p></li>
-            <li><p><a target="_blank" href="/query4">Get the listings, price and the corresponding host_name (name, host_name, price) that are between a specified price range.</a></p></li>
+            <li><p><a target="_blank" href="/query2">This is a query prompt for drill-down.</a></p></li>
           </ul>
 
-          <h4>2 queries. 3 tables per query. Query must be relevant to the given purpose of the dataset. Query must be complex and utilize the aggregate functions and group by clause of SQL.</h4>
+          <h4>Slice</h4>
           <ul>
-            <li><p><a target="_blank" href="/query5">Get the average availabilities of every room type listed in a certain neighbourhood group.</a></p></li>
-            <li><p><a target="_blank" href="/query6">Get the minimum and maximum price of listings in a certain neighbourhood.</a></p></li>
+            <li><p><a target="_blank" href="/query3">This is a query prompt for slice.</a></p></li>
           </ul>
 
-          <h4>2 queries. 3 tables per query. Query must be relevant to the given purpose of the dataset. Query must be complex and utilize the aggregate functions and group by clause of SQL.</h4>
+          <h4>Dice</h4>
           <ul>
-            <li><p><a target="_blank" href="/query7">Get the average price of all listings by a certain host grouped by neighbourhood group.</a></p></li>
+            <li><p><a target="_blank" href="/query4">This is a query prompt for dice.</a></p></li>
           </ul>
         </div>
     </body>
