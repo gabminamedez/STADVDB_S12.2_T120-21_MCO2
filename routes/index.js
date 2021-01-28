@@ -68,23 +68,40 @@ router.post('/query3', function(req, res, next) {
 });
 
 router.get('/query4', function(req, res, next) {
-    res.render('query4', { title: 'Query 4' });
+    let query = `SELECT DISTINCT neighbourhood
+                 FROM neighbourhoods;`;
+
+    db.query(query, (err, result) => {
+        if(err) throw err;
+
+        res.render('query4', { title: 'Dice', choices: result });
+    });
 });
 
 router.post('/query4', function(req, res, next) {
-    let lower_price = req.body.lower_price;
-    let higher_price = req.body.higher_price;
+    let room_type = req.body.room_type;
+    let neighbourhood1 = req.body.neighbourhood1;
+    let neighbourhood2 = req.body.neighbourhood2;
 
-    let query = `SELECT l.name, h.host_name, l.price 
-                 FROM hosts as h 
-                 JOIN listings as l ON h.host_id=l.host_id 
-                 WHERE l.price BETWEEN ${lower_price} AND ${higher_price}
-                 ORDER BY l.name;`;
+    let query = `SELECT neighbourhood, room_type, AVG(price) avg_price
+                FROM listings
+                INNER JOIN room_types USING (room_type_id)
+                INNER JOIN locations USING (location_id)
+                INNER JOIN neighbourhoods USING (neighbourhood_id)
+                WHERE neighbourhood in ('${ neighbourhood1 }', '${ neighbourhood2 }') AND room_type = '${ room_type }'
+                GROUP BY neighbourhood, room_type;`;
+
+    let query1 = `SELECT DISTINCT neighbourhood
+                FROM neighbourhoods;`;
     
     db.query(query, (err, result) => {
         if(err) throw err;
 
-        res.render('query4', { title: 'Query 4', results: result, lower_price: lower_price, higher_price: higher_price });
+        db.query(query1, (err, result1) => {
+            if(err) throw err;
+    
+            res.render('query4', { title: 'Dice', choices: result1, results: result, room_type: room_type, neighbourhood1: neighbourhood1, neighbourhood2: neighbourhood2 });
+        });
     });
 });
 
