@@ -10,12 +10,19 @@
     <body>
         <div class="container">
             <center>
-                <h1>Get the listings, number_of_reviews and the corresponding host_name (name, host_name, number_of_reviews) that have received at least a certain number of reviews.</h1>
+                <h1>Get the average availability of each room type in a given neighbourhood group.</h1>
                 <hr>
 
                 <form method="post" action="/query3">
                     <div class="form-group">
-                        <input required name="number_of_reviews" type="number" class="form-control" placeholder="Add number_of_reviews">
+                        <select required name="neighbourhood_group" class="form-control">
+                            <option value="" selected disabled hidden>Choose a neighbourhood_group</option>
+                            <option value="Brooklyn">Brooklyn</option>
+                            <option value="Manhattan">Manhattan</option>
+                            <option value="Queens">Queens</option>
+                            <option value="Staten Island">Staten Island</option>
+                            <option value="Bronx">Bronx</option>
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
@@ -24,23 +31,23 @@
                 <% if(typeof results == 'undefined') { %>
                     <h2 class="init">Configure the filters above and submit!</h2>
                 <% } else if (typeof results != 'undefined' && results.length != 0) { %>
-                    <h2>Listings with number_of_reviews <= <%= number_of_reviews %></h2>
+                    <h2>Average availability for each room type in neighbourhood_group = <%= neighbourhood_group %></h2>
                     <table class="table">
                         <tr>
-                            <th><h3>name</h3></th>
-                            <th><h3>host_name</h3></th>
-                            <th><h3>number_of_reviews</h3></th>
+                            <th><h3>neighbourhood_group</h3></th>
+                            <th><h3>room_type</h3></th> 
+                            <th><h3>avg_availability</h3></th>
                         </tr>
                         <% for(var i = 0; i < results.length; i++) { %>
                             <tr>
-                                <td class="row"><%= results[i].name %></td> 
-                                <td><%= results[i].host_name %></td>
-                                <td><%= results[i].number_of_reviews %></td>
+                                <td class="row"><%= results[i].neighbourhood_group %></td>
+                                <td><%= results[i].room_type %></td> 
+                                <td><%= results[i].avg_availability %></td>
                             </tr>
                         <% } %>
                     </table>
                 <% } else { %>
-                    <h2>Listings with number_of_reviews <= <%= number_of_reviews %></h2>
+                    <h2>Average availability for each room type in neighbourhood_group = <%= neighbourhood_group %></h2>
                     <h3 class="err">No results found!</h3>
                 <% } %>
             </center>

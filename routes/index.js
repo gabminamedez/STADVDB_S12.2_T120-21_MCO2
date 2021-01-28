@@ -12,7 +12,7 @@ router.get('/query1', function(req, res, next) {
 router.post('/query1', function(req, res, next) {
     var neighbourhood_group = req.body.neighbourhood_group;
 
-    let query = `SELECT room_type, host_id, SUM(price) totalPrice
+    let query = `SELECT room_type, host_id, SUM(price) total_price
                 FROM listings
                 INNER JOIN room_types USING (room_type_id)
                 INNER JOIN locations USING (location_id)
@@ -30,41 +30,40 @@ router.post('/query1', function(req, res, next) {
 });
 
 router.get('/query2', function(req, res, next) {
-    res.render('query2', { title: 'Query 2' });
-});
-
-router.post('/query2', function(req, res, next) {
-    var month = req.body.month;
-    var minimum_nights = req.body.minimum_nights;
-
-    let query = `SELECT name, room_type, price 
-                 FROM listings 
-                 WHERE MONTH(last_review) = ${month} AND minimum_nights >= ${minimum_nights} 
-                 ORDER BY name;`;
+    let query = `SELECT room_type, neighbourhood, AVG(price) avg_price
+                FROM listings
+                INNER JOIN room_types USING (room_type_id)
+                INNER JOIN locations USING (location_id)
+                INNER JOIN neighbourhoods USING (neighbourhood_id)
+                GROUP BY room_type, neighbourhood;`;
     
     db.query(query, (err, result) => {
         if(err) throw err;
 
-        res.render('query2', { title: 'Query 2', results: result, month: month, minimum_nights: minimum_nights });
+        res.render('query2', { title: 'Drill-Down', results: result });
     });
 });
 
 router.get('/query3', function(req, res, next) {
-    res.render('query3', { title: 'Query 3' });
+    res.render('query3', { title: 'Slice' });
 });
 
 router.post('/query3', function(req, res, next) {
-    var number_of_reviews = req.body.number_of_reviews;
-    let query = `SELECT l.name, h.host_name, l.number_of_reviews 
-                 FROM hosts as h 
-                 JOIN listings as l ON h.host_id=l.host_id 
-                 WHERE l.number_of_reviews >= ${number_of_reviews} 
-                 ORDER BY l.name;`;
+    var neighbourhood_group = req.body.neighbourhood_group;
+
+    let query = `SELECT neighbourhood_group, room_type, AVG(availability_365) avg_availability
+                FROM listings
+                INNER JOIN room_types USING (room_type_id)
+                INNER JOIN locations USING (location_id)
+                INNER JOIN neighbourhoods USING (neighbourhood_id)
+                INNER JOIN neighbourhood_groups USING (neighbourhood_group_id)
+                WHERE neighbourhood_group= '${neighbourhood_group}'
+                GROUP BY neighbourhood_group, room_type;`;
     
     db.query(query, (err, result) => {
         if(err) throw err;
 
-        res.render('query3', { title: 'Query 3', results: result, number_of_reviews: number_of_reviews });
+        res.render('query3', { title: 'Slice', results: result, neighbourhood_group: neighbourhood_group });
     });
 });
 
