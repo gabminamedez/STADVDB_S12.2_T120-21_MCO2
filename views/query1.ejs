@@ -10,20 +10,19 @@
     <body>
         <div class="container">
             <center>
-                <h1>Get all listings (name, room_type, price) with a certain room type below or equal to a specified price.</h1>
+                <h1>Get a breakdown of the total price for each room type in a given neighbourhood group.</h1>
                 <hr>
 
                 <form method="post" action="/query1">
                     <div class="form-group">
-                        <select required name="room_type" class="form-control">
-                            <option value="" selected disabled hidden>Choose a room_type</option>
-                            <option value="Private room">Private room</option>
-                            <option value="Entire home/apt">Entire home/apt</option>
-                            <option value="Shared room">Shared room</option>
+                        <select required name="neighbourhood_group" class="form-control">
+                            <option value="" selected disabled hidden>Choose a neighbourhood_group</option>
+                            <option value="Brooklyn">Brooklyn</option>
+                            <option value="Manhattan">Manhattan</option>
+                            <option value="Queens">Queens</option>
+                            <option value="Staten Island">Staten Island</option>
+                            <option value="Bronx">Bronx</option>
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <input required name="price" type="number" class="form-control" placeholder="Add price">
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
@@ -32,23 +31,27 @@
                 <% if(typeof results == 'undefined') { %>
                     <h2 class="init">Configure the filters above and submit!</h2>
                 <% } else if (typeof results != 'undefined' && results.length != 0) { %>
-                    <h2>Listings with room_type = <%= room_type %> and price <= <%= price %></h2>
+                    <h2>Breakdown of prices for all room types in neighbourhood_group = <%= neighbourhood_group %></h2>
                     <table class="table">
                         <tr>
-                            <th><h3>name</h3></th>
-                            <th><h3>room_type</h3></th> 
-                            <th><h3>price</h3></th>
+                            <th><h3>room_type</h3></th>
+                            <th><h3>host_id</h3></th> 
+                            <th><h3>totalPrice</h3></th>
                         </tr>
                         <% for(var i = 0; i < results.length; i++) { %>
                             <tr>
-                                <td class="row"><%= results[i].name %></td>
-                                <td><%= results[i].room_type %></td> 
-                                <td><%= results[i].price %></td>
+                                <% if(i == results.length - 1) { %>
+                                    <td class="row">Total price for <%= neighbourhood_group %></td>
+                                <% } else { %>
+                                    <td class="row"><%= results[i].room_type %></td>
+                                <% } %>
+                                <td><%= results[i].host_id %></td> 
+                                <td><%= results[i].totalPrice %></td>
                             </tr>
                         <% } %>
                     </table>
                 <% } else { %>
-                    <h2>Listings with room_type = <%= room_type %> and price <= <%= price %></h2>
+                    <h2>Breakdown of prices for all room types in neighbourhood_group = <%= neighbourhood_group %></h2>
                     <h3 class="err">No results found!</h3>
                 <% } %>
             </center>

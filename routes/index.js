@@ -6,22 +6,26 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/query1', function(req, res, next) {
-    res.render('query1', { title: 'Query 1' });
+    res.render('query1', { title: 'Roll-Up' });
 });
 
 router.post('/query1', function(req, res, next) {
-    var room_type = req.body.room_type;
-    var price = req.body.price;
+    var neighbourhood_group = req.body.neighbourhood_group;
 
-    let query = `SELECT name, room_type, price 
-                 FROM listings 
-                 WHERE room_type = '${room_type}'  AND price <= ${price} 
-                 ORDER BY name;`;
+    let query = `SELECT room_type, host_id, SUM(price) totalPrice
+                FROM listings
+                INNER JOIN room_types USING (room_type_id)
+                INNER JOIN locations USING (location_id)
+                INNER JOIN neighbourhoods USING (neighbourhood_id)
+                INNER JOIN neighbourhood_groups USING (neighbourhood_group_id)
+                WHERE neighbourhood_group= '${neighbourhood_group}'
+                GROUP BY room_type_id, host_id
+                WITH ROLLUP;`;
 
     db.query(query, (err, result) => {
         if(err) throw err;
 
-        res.render('query1', { title: 'Query 1', results: result, room_type: room_type, price: price });
+        res.render('query1', { title: 'Roll-Up', results: result, neighbourhood_group: neighbourhood_group });
     });
 });
 
