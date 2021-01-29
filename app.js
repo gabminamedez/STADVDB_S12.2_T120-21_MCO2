@@ -6,13 +6,11 @@ const mysql = require('mysql');
 const app = express();
 const port = process.env.PORT || 8080;
 
-require('dotenv').config();
-
 const db = mysql.createConnection({
-    host: process.env.SQL_HOST,
-    user: process.env.SQL_USER,
-    password: process.env.SQL_PASSWORD,
-    database: process.env.SQL_DB
+    host: "cis9cbtgerlk68wl.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    user: "eff3dkg8r5y5l42x",
+    password: "hldf6ajnwjyzo90f",
+    database: "dpuui2kh95t8cclk"
 });
 
 db.connect((err) => {
