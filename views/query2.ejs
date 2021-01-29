@@ -13,7 +13,7 @@
                 <h1>Get the average price for each year grouped by neighbourhood group given a room type.</h1>
                 <hr>
 
-                <form method="post" action="/query1">
+                <form method="post" action="/query2">
                     <div class="form-group">
                         <select required name="room_type" class="form-control">
                             <option value="" selected disabled hidden>Choose a room_type</option>
@@ -26,13 +26,14 @@
                 </form>
                 <hr>
 
-                <% if (typeof results != 'undefined' && results.length != 0) { %>
+                <% if(typeof results == 'undefined') { %>
+                    <h2 class="init">Configure the filters above and submit!</h2>
+                <% } else if (typeof results != 'undefined' && results.length != 0) { %>
                     <h2>Average price for each year grouped by neighbourhood group given room_type = <%= room_type %></h2>
                     <table class="table">
                         <tr>
                             <th><h3>last_review_year</h3></th>
                             <th><h3>neighbourhood_group</h3></th> 
-                            <th><h3>room_type</h3></th>
                             <th><h3>avg_price</h3></th>
                         </tr>
                         <% for(var i = 0; i < results.length; i++) { %>
@@ -43,7 +44,6 @@
                                     <td class="row"><%= results[i].last_review_year %></td>
                                 <% } %>
                                 <td><%= results[i].neighbourhood_group %></td> 
-                                <td><%= results[i].room_type %></td>
                                 <td><%= results[i].avg_price %></td>
                             </tr>
                         <% } %>
