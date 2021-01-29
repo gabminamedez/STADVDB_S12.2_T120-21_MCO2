@@ -10,18 +10,10 @@
     <body>
         <div class="container">
             <center>
-                <h1>Get average price of a given room type in two different neighborhoods for comparison.</h1>
+                <h1>Get average price of a given last review year in two different neighborhoods for comparison.</h1>
                 <hr>
 
                 <form method="post" action="/query4">
-                    <div class="form-group">
-                        <select required name="room_type" class="form-control">
-                            <option value="" selected disabled hidden>Choose a room_type</option>
-                            <option value="Private room">Private room</option>
-                            <option value="Entire home/apt">Entire home/apt</option>
-                            <option value="Shared room">Shared room</option>
-                        </select>
-                    </div>
                     <div class="form-group">
                         <select required name="neighbourhood1" class="form-control">
                             <option value="" selected disabled hidden>Choose first neighbourhood</option>
@@ -38,6 +30,20 @@
                             <% } %>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <select required name="year" class="form-control">
+                            <option value="" selected disabled hidden>Choose a year</option>
+                            <option value="2019">2019</option>
+                            <option value="2018">2018</option>
+                            <option value="2017">2017</option>
+                            <option value="2016">2016</option>
+                            <option value="2015">2015</option>
+                            <option value="2014">2014</option>
+                            <option value="2013">2013</option>
+                            <option value="2012">2012</option>
+                            <option value="2011">2011</option>
+                        </select>
+                    </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
                 <hr>
@@ -45,23 +51,23 @@
                 <% if(typeof results == 'undefined') { %>
                     <h2 class="init">Configure the filters above and submit!</h2>
                 <% } else if (typeof results != 'undefined' && results.length != 0) { %>
-                    <h2>Comparative average price of listings in neighbourhood = <%= neighbourhood1 %> and <%= neighbourhood1 %>, with room_type = <%= room_type %></h2>
+                    <h2>Comparative average price of listings in neighbourhood = <%= neighbourhood1 %> and <%= neighbourhood2 %>, with last_review_year = <%= year %></h2>
                     <table class="table">
                         <tr>
                             <th><h3>neighbourhood</h3></th>
-                            <th><h3>room_type</h3></th>
+                            <th><h3>last_review_year</h3></th>
                             <th><h3>avg_price</h3></th>
                         </tr>
                         <% for(var i = 0; i < results.length; i++) { %>
                             <tr>
                                 <td class="row"><%= results[i].neighbourhood %></td> 
-                                <td><%= results[i].room_type %></td>
+                                <td><%= results[i].last_review_year %></td>
                                 <td><%= results[i].avg_price %></td>
                             </tr>
                         <% } %>
                     </table>
                 <% } else { %>
-                    <h2>Comparative average price of listings in neighbourhood = <%= neighbourhood1 %> and <%= neighbourhood1 %>, with room_type = <%= room_type %></h2>
+                    <h2>Comparative average price of listings in neighbourhood = <%= neighbourhood1 %> and <%= neighbourhood2 %>, with last_review_year = <%= year %></h2>
                     <h3 class="err">No results found!</h3>
                 <% } %>
             </center>

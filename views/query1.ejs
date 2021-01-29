@@ -10,7 +10,7 @@
     <body>
         <div class="container">
             <center>
-                <h1>Get a breakdown of the total price for each room type in a given neighbourhood group.</h1>
+                <h1>Get a breakdown of the total price for each year in every room type in a given neighbourhood group.</h1>
                 <hr>
 
                 <form method="post" action="/query1">
@@ -31,27 +31,29 @@
                 <% if(typeof results == 'undefined') { %>
                     <h2 class="init">Configure the filters above and submit!</h2>
                 <% } else if (typeof results != 'undefined' && results.length != 0) { %>
-                    <h2>Breakdown of prices for all room types in neighbourhood_group = <%= neighbourhood_group %></h2>
+                    <h2>Breakdown of prices for all last review years and room types in neighbourhood_group = <%= neighbourhood_group %></h2>
                     <table class="table">
                         <tr>
-                            <th><h3>room_type</h3></th>
-                            <th><h3>host_id</h3></th> 
+                            <th><h3>last_review_year</h3></th>
+                            <th><h3>room_type</h3></th> 
                             <th><h3>total_price</h3></th>
                         </tr>
                         <% for(var i = 0; i < results.length; i++) { %>
                             <tr>
                                 <% if(i == results.length - 1) { %>
                                     <td class="row">Total price for <%= neighbourhood_group %></td>
+                                <% } else if(results[i].last_review_year == null) { %>
+                                    <td class="row">NULL</td>
                                 <% } else { %>
-                                    <td class="row"><%= results[i].room_type %></td>
+                                    <td class="row"><%= results[i].last_review_year %></td>
                                 <% } %>
-                                <td><%= results[i].host_id %></td> 
+                                <td><%= results[i].room_type %></td> 
                                 <td><%= results[i].total_price %></td>
                             </tr>
                         <% } %>
                     </table>
                 <% } else { %>
-                    <h2>Breakdown of prices for all room types in neighbourhood_group = <%= neighbourhood_group %></h2>
+                    <h2>Breakdown of prices for all last review years and room types in neighbourhood_group = <%= neighbourhood_group %></h2>
                     <h3 class="err">No results found!</h3>
                 <% } %>
             </center>

@@ -10,21 +10,28 @@
     <body>
         <div class="container">
             <center>
-                <h1>Get the average price of each room type per neighborhood.</h1>
+                <h1>Get the average price for each year in every room type grouped by neighbourhood group.</h1>
                 <hr>
 
                 <% if (typeof results != 'undefined' && results.length != 0) { %>
-                    <h2>Average prices of each room type per neighborhood</h2>
+                    <h2>Average price for each year in every room type grouped by neighbourhood group</h2>
                     <table class="table">
                         <tr>
+                            <th><h3>last_review_year</h3></th>
+                            <th><h3>neighbourhood_group</h3></th> 
                             <th><h3>room_type</h3></th>
-                            <th><h3>neighbourhood</h3></th> 
                             <th><h3>avg_price</h3></th>
                         </tr>
                         <% for(var i = 0; i < results.length; i++) { %>
                             <tr>
-                                <td class="row"><%= results[i].room_type %></td>
-                                <td><%= results[i].neighbourhood %></td> 
+                                <% if(results[i].last_review_year == null) { %>
+                                    <td class="row">NULL</td>
+                                <% } else { %>
+                                    <td class="row"><%= results[i].last_review_year %></td>
+                                <% } %>
+                                <!-- <td class="row"><%= results[i].last_review_year %></td> -->
+                                <td><%= results[i].neighbourhood_group %></td> 
+                                <td><%= results[i].room_type %></td>
                                 <td><%= results[i].avg_price %></td>
                             </tr>
                         <% } %>

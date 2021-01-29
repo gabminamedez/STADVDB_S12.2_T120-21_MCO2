@@ -10,18 +10,22 @@
     <body>
         <div class="container">
             <center>
-                <h1>Get the average availability of each room type in a given neighbourhood group.</h1>
+                <h1>Get the average reviews per month of each neighbourhood in a given year last reviewed.</h1>
                 <hr>
 
                 <form method="post" action="/query3">
                     <div class="form-group">
-                        <select required name="neighbourhood_group" class="form-control">
-                            <option value="" selected disabled hidden>Choose a neighbourhood_group</option>
-                            <option value="Brooklyn">Brooklyn</option>
-                            <option value="Manhattan">Manhattan</option>
-                            <option value="Queens">Queens</option>
-                            <option value="Staten Island">Staten Island</option>
-                            <option value="Bronx">Bronx</option>
+                        <select required name="year" class="form-control">
+                            <option value="" selected disabled hidden>Choose a year</option>
+                            <option value="2019">2019</option>
+                            <option value="2018">2018</option>
+                            <option value="2017">2017</option>
+                            <option value="2016">2016</option>
+                            <option value="2015">2015</option>
+                            <option value="2014">2014</option>
+                            <option value="2013">2013</option>
+                            <option value="2012">2012</option>
+                            <option value="2011">2011</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
@@ -31,23 +35,21 @@
                 <% if(typeof results == 'undefined') { %>
                     <h2 class="init">Configure the filters above and submit!</h2>
                 <% } else if (typeof results != 'undefined' && results.length != 0) { %>
-                    <h2>Average availability for each room type in neighbourhood_group = <%= neighbourhood_group %></h2>
+                    <h2>Average reviews per month for each neighbourhood given last_review_year = <%= year %></h2>
                     <table class="table">
                         <tr>
-                            <th><h3>neighbourhood_group</h3></th>
-                            <th><h3>room_type</h3></th> 
-                            <th><h3>avg_availability</h3></th>
+                            <th><h3>neighbourhood</h3></th>
+                            <th><h3>avg_reviews</h3></th> 
                         </tr>
                         <% for(var i = 0; i < results.length; i++) { %>
                             <tr>
-                                <td class="row"><%= results[i].neighbourhood_group %></td>
-                                <td><%= results[i].room_type %></td> 
-                                <td><%= results[i].avg_availability %></td>
+                                <td class="row"><%= results[i].neighbourhood %></td>
+                                <td><%= results[i].avg_reviews %></td> 
                             </tr>
                         <% } %>
                     </table>
                 <% } else { %>
-                    <h2>Average availability for each room type in neighbourhood_group = <%= neighbourhood_group %></h2>
+                    <h2>Average reviews per month for each neighbourhood given last_review_year = <%= year %></h2>
                     <h3 class="err">No results found!</h3>
                 <% } %>
             </center>

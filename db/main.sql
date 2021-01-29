@@ -52,6 +52,7 @@ CREATE TABLE listings (
     price DECIMAL(10, 2),
     minimum_nights INT,
     number_of_reviews DECIMAL (10, 2),
+    last_review DATE,
     reviews_per_month DECIMAL (10, 2),
     availability_365 INT,
     host_id INT,
