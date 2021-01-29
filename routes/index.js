@@ -76,7 +76,7 @@ router.get('/query4', function(req, res, next) {
     db.query(query, (err, result) => {
         if(err) throw err;
 
-        res.render('query4', { title: 'Dice', choices: result.sort() });
+        res.render('query4', { title: 'Dice', choices: result });
     });
 });
 
@@ -102,7 +102,7 @@ router.post('/query4', function(req, res, next) {
         db.query(query1, (err, result1) => {
             if(err) throw err;
     
-            res.render('query4', { title: 'Dice', choices: result1.sort(), results: result, neighbourhood1: neighbourhood1, neighbourhood2: neighbourhood2, year: year });
+            res.render('query4', { title: 'Dice', choices: result1, results: result, neighbourhood1: neighbourhood1, neighbourhood2: neighbourhood2, year: year });
         });
     });
 });
