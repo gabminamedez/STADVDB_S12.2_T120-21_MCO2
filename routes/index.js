@@ -30,19 +30,26 @@ router.post('/query1', function(req, res, next) {
 });
 
 router.get('/query2', function(req, res, next) {
-    let query = `SELECT YEAR(last_review) last_review_year, neighbourhood_group, room_type, AVG(price) avg_price
+    res.render('query2', { title: 'Drill-Down' });
+});
+
+router.get('/query2', function(req, res, next) {
+    var room_type = req.body.room_type;
+
+    let query = `SELECT YEAR(last_review) AS last_review_year, neighbourhood_group, AVG(price) avg_price
                 FROM listings
                 INNER JOIN room_types USING (room_type_id)
                 INNER JOIN locations USING (location_id)
                 INNER JOIN neighbourhoods USING (neighbourhood_id)
                 INNER JOIN neighbourhood_groups USING (neighbourhood_group_id)
+                WHERE room_type = ${ room_type }
                 GROUP BY YEAR(last_review), neighbourhood_group, room_type
                 ORDER BY YEAR(last_review), neighbourhood_group, room_type;`;
     
     db.query(query, (err, result) => {
         if(err) throw err;
 
-        res.render('query2', { title: 'Drill-Down', results: result });
+        res.render('query2', { title: 'Drill-Down', results: result, room_type: room_type });
     });
 });
 
@@ -90,7 +97,7 @@ router.post('/query4', function(req, res, next) {
                 INNER JOIN room_types USING (room_type_id)
                 INNER JOIN locations USING (location_id)
                 INNER JOIN neighbourhoods USING (neighbourhood_id)
-                WHERE neighbourhood in ('${ neighbourhood1 }', '${ neighbourhood2 }') AND YEAR(last_review) = ${ year }
+                WHERE neighbourhood in ("${ neighbourhood1 }", "${ neighbourhood2 }") AND YEAR(last_review) = ${ year }
                 GROUP BY neighbourhood, last_review_year;`;
 
     let query1 = `SELECT DISTINCT neighbourhood

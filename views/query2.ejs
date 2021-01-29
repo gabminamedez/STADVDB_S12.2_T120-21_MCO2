@@ -10,11 +10,24 @@
     <body>
         <div class="container">
             <center>
-                <h1>Get the average price for each year in every room type grouped by neighbourhood group.</h1>
+                <h1>Get the average price for each year grouped by neighbourhood group given a room type.</h1>
+                <hr>
+
+                <form method="post" action="/query1">
+                    <div class="form-group">
+                        <select required name="room_type" class="form-control">
+                            <option value="" selected disabled hidden>Choose a room_type</option>
+                            <option value="Private room">Private room</option>
+                            <option value="Entire home/apt">Entire home/apt</option>
+                            <option value="Shared room">Shared room</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
                 <hr>
 
                 <% if (typeof results != 'undefined' && results.length != 0) { %>
-                    <h2>Average price for each year in every room type grouped by neighbourhood group</h2>
+                    <h2>Average price for each year grouped by neighbourhood group given room_type = <%= room_type %></h2>
                     <table class="table">
                         <tr>
                             <th><h3>last_review_year</h3></th>
@@ -29,7 +42,6 @@
                                 <% } else { %>
                                     <td class="row"><%= results[i].last_review_year %></td>
                                 <% } %>
-                                <!-- <td class="row"><%= results[i].last_review_year %></td> -->
                                 <td><%= results[i].neighbourhood_group %></td> 
                                 <td><%= results[i].room_type %></td>
                                 <td><%= results[i].avg_price %></td>
@@ -37,6 +49,7 @@
                         <% } %>
                     </table>
                 <% } else { %>
+                    <h2>Average price for each year grouped by neighbourhood group given room_type = <%= room_type %></h2>
                     <h3 class="err">No results found!</h3>
                 <% } %>
             </center>
